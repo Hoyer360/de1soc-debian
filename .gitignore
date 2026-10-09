@@ -1,0 +1,28 @@
+# Generated artifacts and local system state
+/artifacts/*
+!/artifacts/original-build.sha256
+/rootfs/
+/reference/
+/backups/
+/logs/
+/publish/
+/.rootfs.lock
+__pycache__/
+*.py[cod]
+*.img
+*.img.*
+*.sfp
+*.rbf
+*.sof
+*.tar
+*.tar.*
+# Credentials and personal initialization data
+*.pub
+*.pem
+*.key
+id_*
+authorized_keys*
+known_hosts*
+.env
+.env.*
+*.nmconnection

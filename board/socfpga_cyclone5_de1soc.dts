@@ -1,0 +1,67 @@
+// SPDX-License-Identifier: GPL-2.0+
+/* Minimal DE1-SoC bring-up DT. Pin routing checked against this project's
+ * HPS handoff and top-level VHDL; Ethernet timing still needs board testing.
+ */
+#include "socfpga_cyclone5.dtsi"
+
+/ {
+    model = "Terasic DE1-SoC";
+    compatible = "terasic,de1soc", "altr,socfpga-cyclone5", "altr,socfpga";
+
+    chosen {
+        stdout-path = "serial0:115200n8";
+    };
+    memory@0 {
+        device_type = "memory";
+        reg = <0x0 0x40000000>;
+    };
+    aliases {
+        ethernet0 = &gmac1;
+    };
+    regulator_3_3v: regulator {
+        compatible = "regulator-fixed";
+        regulator-name = "3.3V";
+        regulator-min-microvolt = <3300000>;
+        regulator-max-microvolt = <3300000>;
+    };
+    leds {
+        compatible = "gpio-leds";
+        hps-led {
+            label = "de1soc:green:hps";
+            /* GPIO bank 1 begins at HPS_GPIO29: GPIO53 = portb24. */
+            gpios = <&portb 24 0>;
+            /* The preserved kernel enables cpu, but not heartbeat. */
+            linux,default-trigger = "cpu";
+        };
+    };
+};
+
+&gmac1 {
+    status = "okay";
+    phy-mode = "rgmii";
+    /* Preserve the reference's KSZ9021 timing for initial bring-up.
+     * Verify link stability and throughput on the actual DE1-SoC.
+     */
+    rxd0-skew-ps = <0>;
+    rxd1-skew-ps = <0>;
+    rxd2-skew-ps = <0>;
+    rxd3-skew-ps = <0>;
+    txen-skew-ps = <0>;
+    txc-skew-ps = <2600>;
+    rxdv-skew-ps = <0>;
+    rxc-skew-ps = <2000>;
+};
+&gpio0 { status = "okay"; };
+&gpio1 { status = "okay"; };
+&gpio2 { status = "okay"; };
+&mmc0 {
+    /* No SoCDK portb18 card-detect GPIO. Base dtsi uses broken-cd polling. */
+    status = "okay";
+    vmmc-supply = <&regulator_3_3v>;
+    vqmmc-supply = <&regulator_3_3v>;
+};
+&uart0 { status = "okay"; };
+&usb1 {
+    status = "okay";
+    dr_mode = "host";
+};

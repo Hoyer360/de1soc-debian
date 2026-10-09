@@ -1,0 +1,18 @@
+# U-Boot's fatscript loads this at 0x02100000. Keep the ~7 MiB RBF elsewhere.
+bridge disable
+if test "${fpga_autoload}" != "no"; then
+    if fatload mmc 0:1 0x03000000 de1_soc_top.rbf; then
+        if fpga load 0 0x03000000 ${filesize}; then
+            bridge enable 0x2
+        else
+            echo FPGA configuration failed - booting HPS with bridges disabled
+        fi
+    else
+        echo FPGA image missing - booting HPS with bridges disabled
+    fi
+fi
+sysboot mmc 0:1 any ${pxefile_addr_r} /extlinux/extlinux.conf
+# Do not return into the compiled bootcmd, which unconditionally enables bridges.
+echo Linux boot failed - resetting in 10 seconds
+sleep 10
+reset

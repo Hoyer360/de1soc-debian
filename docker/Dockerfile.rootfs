@@ -1,0 +1,9 @@
+FROM de1soc-build:bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    debootstrap qemu-user-static kmod dosfstools mtools fdisk \
+    e2fsprogs strace shellcheck \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /work

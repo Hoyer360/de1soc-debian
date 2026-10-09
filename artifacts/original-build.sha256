@@ -1,0 +1,4 @@
+36546c23b33b505476f3dc7652f4b93064692be525cd7f7d88405f2796a210bb  /work/reference/dtsoc/sw/u-boot/u-boot-socfpga/u-boot-with-spl.sfp
+af9cbdca6e63cbfbf10fed312779d69a6f718903c59672b411217791866358af  /work/reference/dtsoc/sw/linux/linux-source-6.1/arch/arm/boot/zImage
+55c65ce570435a10a4bb85f141d2dc4a46c0c0d3398a147bb223dee100228c55  /work/reference/dtsoc/sw/linux/linux-source-6.1/arch/arm/boot/dts/socfpga_cyclone5_socdk.dtb
+6400c4d38f5f913def850d5bbef2dc8ea06ee9923ae4743b3a57ab5abc27f8eb  /work/reference/dtsoc/output_files/de1_soc_top.rbf
